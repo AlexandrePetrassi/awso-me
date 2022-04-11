@@ -1,2 +1,2 @@
 # awso-me
-application window size optmizer - with multiprocessing and event listeners!
+**A**pplication **W**indow **S**ize **O**ptmizer **-** with **M**ultiprocessing and **E**ventListeners!
