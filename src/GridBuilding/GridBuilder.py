@@ -134,7 +134,7 @@ def spawn_windows_grid(
     """
     jobs = []
     x, y = grid['size']
-    for index in range(x * y, -1, -1):
+    for index in range(x * y - 1, -1, -1):
         shared_pid = create_shared_value(shared_pids)
         spawn_window(app, args, index, shared_pid, jobs, grid, finder)
     return jobs
