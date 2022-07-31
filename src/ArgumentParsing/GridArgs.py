@@ -17,7 +17,10 @@ def get_grid_args(args):
         'margin': (args.grid_margin_x, args.grid_margin_y),
         'padding': (args.grid_padding_x, args.grid_padding_y),
         'offset': (args.grid_offset_x, args.grid_offset_y),
-        'bounds': (args.grid_bounds_x, args.grid_bounds_y),
+        'bounds': (
+            args.grid_bounds_x + args.grid_relative_bounds_x,
+            args.grid_bounds_y + args.grid_relative_bounds_y
+        ),
         'parallel': args.parallel
     }
 
@@ -30,6 +33,7 @@ def add_grid_args(parser: ArgumentParser):
     add_paddings(group)
     add_offset(group)
     add_bounds(group)
+    add_relative_bounds(group)
 
 
 def add_parallel(group):
@@ -122,4 +126,21 @@ def add_bounds(group):
         dest='grid_bounds_y',
         type=int,
         metavar="BOUNDS_Y"
+    )
+
+
+def add_relative_bounds(group):
+    group.add_argument(
+        '-rbx', '--grid-relative-bounds-x',
+        default=0,
+        dest='grid_relative_bounds_x',
+        type=int,
+        metavar="RELATIVE_BOUNDS_X"
+    )
+    group.add_argument(
+        '-rby', '--grid-relative-bounds-y',
+        default=0,
+        dest='grid_relative_bounds_y',
+        type=int,
+        metavar="RELATIVE_BOUNDS_Y"
     )
