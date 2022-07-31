@@ -3,6 +3,7 @@ Creates the command line interface with every option from the relevant packages
 """
 
 import argparse
+import sys
 
 from src.ArgumentParsing import WindowSorterArgs
 from src.ArgumentParsing import GridArgs
@@ -22,14 +23,26 @@ def parse_args():
     GridArgs.add_grid_args(parser)
     WindowSorterArgs.add_window_sorter_args(parser)
     WindowHandleFinderArgs.add_window_handle_finder_args(parser)
-    args = parser.parse_args()
+    opts, args = preprocess(sys.argv[1:])
+    args = parser.parse_args(args)
     return (
         args.program,
-        args.arguments,
+        args.arguments + opts,
         args.fu_tps,
         GridArgs.get_grid_args(args),
         WindowHandleFinderArgs.get_window_finder_args(args)
     )
+
+
+def preprocess(argv):
+    opts = []
+    args = []
+    for arg in argv:
+        if arg.startswith("-a="):
+            opts.append(arg[3:])
+        else:
+            args.append(arg)
+    return opts, args
 
 
 def create_parser():
