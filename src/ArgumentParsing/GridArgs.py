@@ -21,13 +21,15 @@ def get_grid_args(args):
             args.grid_bounds_x + args.grid_relative_bounds_x,
             args.grid_bounds_y + args.grid_relative_bounds_y
         ),
-        'parallel': args.parallel
+        'parallel': args.parallel,
+        'hide_title': args.hide_title
     }
 
 
 def add_grid_args(parser: ArgumentParser):
     group = parser.add_argument_group('Grid properties')
     add_parallel(group)
+    add_hide_title(group)
     add_size(group)
     add_margins(group)
     add_paddings(group)
@@ -41,6 +43,14 @@ def add_parallel(group):
         '-p', '--parallel',
         action='store_true',
         dest='parallel',
+    )
+
+
+def add_hide_title(group):
+    group.add_argument(
+        '-ht', '--hide-title',
+        action='store_true',
+        dest='hide_title',
     )
 
 

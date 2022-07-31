@@ -31,10 +31,25 @@ def process(
     :param grid: A dict containing all parsed grid arguments
     :param finder: A dict containing all parsed window_finder arguments
     """
+
     window = WindowSpawner.spawn(app, args, finder)
     optimal_size = Resizer.get_window_optimal_size(index, **grid)
+    if grid["hide_title"]:
+        delete_title(window.handle)
     win32gui.MoveWindow(window.handle, *optimal_size, True)
     shared_pid.value = window.pid
+
+
+def delete_title(handle):
+    from win32con import GWL_STYLE, WS_CAPTION, WS_SYSMENU, WS_THICKFRAME
+    from win32con import WS_MINIMIZE, WS_MAXIMIZEBOX
+    l_cur_style = win32gui.GetWindowLong(handle, GWL_STYLE)
+    l_cur_style = l_cur_style & ~ WS_CAPTION
+    l_cur_style = l_cur_style & ~ WS_SYSMENU
+    l_cur_style = l_cur_style & ~ WS_THICKFRAME
+    l_cur_style = l_cur_style & ~ WS_MINIMIZE
+    l_cur_style = l_cur_style & ~ WS_MAXIMIZEBOX
+    win32gui.SetWindowLong(handle, GWL_STYLE, l_cur_style)
 
 
 def parallel_process(
